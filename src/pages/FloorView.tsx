@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Home, Maximize, Bath, Car, Star } from "lucide-react";
+import { ArrowLeft, Home, Maximize, Bath, Car, Star, GalleryThumbnails } from "lucide-react";
 import NotFound from "./NotFound";
+
 
 const towers = {
   'tower-a': { name: 'Tower A - Skyline Residences', gradient: 'from-blue-600 to-purple-600' },
@@ -64,11 +66,12 @@ const FloorView = () => {
   const { towerId, floorNumber } = useParams();
   const navigate = useNavigate();
   const [hoveredApartment, setHoveredApartment] = useState<string | null>(null);
-
+  const [backgroundDark, setBackgroundDark] = useState(false);
+  
   const tower = towers[towerId as keyof typeof towers];
-
+  
   if (!tower) {
-    return <NotFound />;
+    return <NotFound/>;
   }
 
   const formatPrice = (price: number) => {
@@ -80,10 +83,38 @@ const FloorView = () => {
     }).format(price);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        duration: 0.6
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 relative">
+      <motion.div
+        animate={{ 
+          backgroundColor: backgroundDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)' 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="absolute inset-0 z-10 pointer-events-none"
+      />
+
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
+
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
             <button
@@ -103,24 +134,50 @@ const FloorView = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8 relative z-15">
-        <div className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
           <h2 className="text-3xl font-bold text-slate-800 mb-2">Available Units</h2>
           <p className="text-slate-600">Choose from {apartments.length} unique apartment layouts on floor {floorNumber}</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        </motion.div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6"
+        >
           {apartments.map((apartment) => (
-            <div
+            <motion.div
               key={apartment.id}
-              onMouseEnter={() => setHoveredApartment(apartment.id)}
-              onMouseLeave={() => setHoveredApartment(null)}
+              variants={cardVariants}
+              onHoverStart={() => {
+                setHoveredApartment(apartment.id);
+                setBackgroundDark(true);
+              }}
+              onHoverEnd={() => {
+                setHoveredApartment(null);
+                setBackgroundDark(false);
+              }}
               onClick={() => navigate(`/tower/${towerId}/floor/${floorNumber}/apartment/${apartment.id}`)}
               className="group cursor-pointer relative z-20"
             >
-              <div className="overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300">
+              <motion.div
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -8,
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300"
+              >
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <motion.img
                     src={apartment.thumbnail}
                     alt={apartment.unitType}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -173,17 +230,29 @@ const FloorView = () => {
                       )}
                     </div>
                   </div>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className={`w-full py-3 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
                   >
                     View Details
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
-            </div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: hoveredApartment === apartment.id ? 1 : 0 }}
+                  className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent pointer-events-none rounded-2xl"
+                />
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
-        <div className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30"
+        >
           <h3 className="text-xl font-bold text-slate-800 mb-6">Floor {floorNumber} Features</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-center gap-3">
@@ -208,7 +277,7 @@ const FloorView = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </main>
     </div>
   );
