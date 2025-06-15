@@ -17,7 +17,10 @@ const apartments = [
     areaUnit: 'sq ft',
     rooms: 1,
     bathrooms: 1,
-    features: ['City View', 'Modern Kitchen', 'Smart Home']
+    price: 350000,
+    thumbnail: 'https://plus.unsplash.com/premium_photo-1674730952112-965c8e4decf4?q=80&w=2815&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    features: ['City View', 'Modern Kitchen', 'Smart Home'],
+    availability: 'Available'
   },
   {
     id: 'apt-2',
@@ -26,7 +29,10 @@ const apartments = [
     areaUnit: 'sq ft',
     rooms: 2,
     bathrooms: 1,
-    features: ['Balcony', 'Ocean View', 'Walk-in Closet']
+    price: 475000,
+    thumbnail: 'https://plus.unsplash.com/premium_photo-1661962302410-36d3325cf9ce?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    features: ['Balcony', 'Ocean View', 'Walk-in Closet'],
+    availability: 'Available'
   },
   {
     id: 'apt-3',
@@ -35,7 +41,10 @@ const apartments = [
     areaUnit: 'sq ft',
     rooms: 3,
     bathrooms: 2,
-    features: ['Corner Unit', 'Dual Balcony', 'Master Suite']
+    price: 625000,
+    thumbnail: 'https://images.unsplash.com/photo-1686056040370-b5e5c06c4273?q=80&w=2837&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    features: ['Corner Unit', 'Dual Balcony', 'Master Suite'],
+    availability: 'Reserved'
   },
   {
     id: 'apt-4',
@@ -44,7 +53,10 @@ const apartments = [
     areaUnit: 'sq ft',
     rooms: 3,
     bathrooms: 2,
-    features: ['Panoramic View', 'Private Terrace', 'Premium Finishes']
+    price: 785000,
+    thumbnail: 'https://images.unsplash.com/photo-1568115286680-d203e08a8be6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    features: ['Panoramic View', 'Private Terrace', 'Premium Finishes'],
+    availability: 'Available'
   }
 ];
 
@@ -59,8 +71,18 @@ const FloorView = () => {
     return <NotFound />;
   }
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 relative">
+      {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
@@ -78,6 +100,8 @@ const FloorView = () => {
           </div>
         </div>
       </header>
+
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8 relative z-15">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-slate-800 mb-2">Available Units</h2>
@@ -93,6 +117,24 @@ const FloorView = () => {
               className="group cursor-pointer relative z-20"
             >
               <div className="overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={apartment.thumbnail}
+                    alt={apartment.unitType}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold ${
+                    apartment.availability === 'Available' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-orange-500 text-white'
+                  }`}>
+                    {apartment.availability}
+                  </div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <div className="text-2xl font-bold">{formatPrice(apartment.price)}</div>
+                  </div>
+                </div>
                 <div className="p-6">
                   <div className="mb-4">
                     <h3 className="text-xl font-bold text-slate-800 mb-1">
