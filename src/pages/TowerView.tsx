@@ -158,12 +158,36 @@ const TowerView = () => {
                   </motion.button>
                 </div>
 
-
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: hoveredFloor === floor.number ? 1 : 0 }}
+                  className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"
+                />
               </div>
             </motion.div>
           ))}
         </motion.div>
-
+             <div className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30">
+          <h3 className="text-xl font-bold text-slate-800 mb-6">Tower Overview</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-slate-800 mb-1">{tower.floors}</div>
+              <div className="text-sm text-slate-600">Total Floors</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-slate-800 mb-1">120</div>
+              <div className="text-sm text-slate-600">Total Units</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600 mb-1">24</div>
+              <div className="text-sm text-slate-600">Available Units</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 mb-1">85%</div>
+              <div className="text-sm text-slate-600">Occupancy Rate</div>
+            </div>
+          </div>
+        </div>
 
       </main>
     </div>
