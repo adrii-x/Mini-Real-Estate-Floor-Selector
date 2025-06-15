@@ -167,7 +167,13 @@ const TowerView = () => {
             </motion.div>
           ))}
         </motion.div>
-             <div className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30">
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30"
+        >
           <h3 className="text-xl font-bold text-slate-800 mb-6">Tower Overview</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
@@ -175,11 +181,11 @@ const TowerView = () => {
               <div className="text-sm text-slate-600">Total Floors</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-slate-800 mb-1">120</div>
+              <div className="text-2xl font-bold text-slate-800 mb-1">{floors.reduce((acc, floor) => acc + floor.units, 0)}</div>
               <div className="text-sm text-slate-600">Total Units</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 mb-1">24</div>
+              <div className="text-2xl font-bold text-green-600 mb-1">{floors.reduce((acc, floor) => acc + floor.available, 0)}</div>
               <div className="text-sm text-slate-600">Available Units</div>
             </div>
             <div className="text-center">
@@ -187,8 +193,7 @@ const TowerView = () => {
               <div className="text-sm text-slate-600">Occupancy Rate</div>
             </div>
           </div>
-        </div>
-
+        </motion.div>
       </main>
     </div>
   );
