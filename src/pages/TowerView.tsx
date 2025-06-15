@@ -62,6 +62,38 @@ const TowerView = () => {
           </div>
         </div>
       </header>
+
+      <main className="max-w-6xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-slate-800 mb-2">Select a Floor</h2>
+          <p className="text-slate-600">Choose from 1 featured floor of luxury living</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          <div
+            onMouseEnter={() => setHoveredFloor(floor.number)}
+            onMouseLeave={() => setHoveredFloor(null)}
+            onClick={() => navigate(`/tower/${towerId}/floor/${floor.number}`)}
+            className="group cursor-pointer"
+          >
+            <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-800 mb-1">
+                    Floor {floor.number}
+                  </h3>
+                  <p className="text-sm text-slate-600">{floor.view}</p>
+                </div>
+                <button
+                  className={`w-full py-2 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
+                >
+                  View Apartments
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
