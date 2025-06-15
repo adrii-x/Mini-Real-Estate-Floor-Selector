@@ -65,6 +65,8 @@ Then open http://localhost:5173 in your browser.
 
 The app is deployed on Vercel. I chose Vercel because it integrates really well with React projects and handles the build process automatically when you push to GitHub.
 
+https://mini-real-estate-floor-selector-pied.vercel.app
+
 ## Browser compatibility
 
 Tested on Chrome, Firefox, Safari, and Edge. The animations might be slightly different on older browsers, but the core functionality works everywhere.
