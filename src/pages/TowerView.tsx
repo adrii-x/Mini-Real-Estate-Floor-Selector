@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft} from "lucide-react";
+import { ArrowLeft, Building2, Users, Eye } from "lucide-react";
 import NotFound from "./NotFound";
 
 const towers = {
@@ -94,7 +94,29 @@ const TowerView = () => {
                     <p className="text-sm text-slate-600">{floor.view}</p>
                   </div>
 
-                 
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Building2 className="w-4 h-4 text-slate-500" />
+                      <div>
+                        <div className="text-sm font-semibold text-slate-700">{floor.units}</div>
+                        <div className="text-xs text-slate-500">Total Units</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-green-500" />
+                      <div>
+                        <div className="text-sm font-semibold text-green-600">{floor.available}</div>
+                        <div className="text-xs text-slate-500">Available</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-4">
+                    <Eye className="w-4 h-4 text-blue-500" />
+                    <span className="text-sm text-blue-600 font-medium">{floor.view}</span>
+                  </div>
+
                   <button
                     className={`w-full py-2 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
                   >
