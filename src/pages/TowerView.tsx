@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Building2, Users, Eye } from "lucide-react";
 import NotFound from "./NotFound";
@@ -38,12 +39,32 @@ const TowerView = () => {
     return <NotFound />;
   }
 
+  // Generate floors with fixed values for units and available
   const floors = Array.from({ length: tower.floors }, (_, i) => ({
     number: tower.floors - i,
     units: 12,
     available: 3,
     view: i < 5 ? 'Premium View' : i < 10 ? 'City View' : 'Garden View'
   }));
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        duration: 0.6
+      }
+    }
+  };
+
+  const floorVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -66,17 +87,28 @@ const TowerView = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-8">
-        <div className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
           <h2 className="text-3xl font-bold text-slate-800 mb-2">Select a Floor</h2>
           <p className="text-slate-600">Choose from {tower.floors} floors of luxury living</p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {floors.map((floor) => (
-            <div
+            <motion.div
               key={floor.number}
-              onMouseEnter={() => setHoveredFloor(floor.number)}
-              onMouseLeave={() => setHoveredFloor(null)}
+              variants={floorVariants}
+              whileHover={{ y: -4, scale: 1.02 }}
+              onHoverStart={() => setHoveredFloor(floor.number)}
+              onHoverEnd={() => setHoveredFloor(null)}
               onClick={() => navigate(`/tower/${towerId}/floor/${floor.number}`)}
               className="group cursor-pointer"
             >
@@ -117,16 +149,18 @@ const TowerView = () => {
                     <span className="text-sm text-blue-600 font-medium">{floor.view}</span>
                   </div>
 
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className={`w-full py-2 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
                   >
                     View Apartments
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </main>
     </div>
   );
