@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Building, MapPin, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const towers = [
@@ -15,6 +17,7 @@ const towers = [
 
 const Index = () => {
   const navigate = useNavigate();
+  const [hoveredTower, setHoveredTower] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -30,6 +33,66 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {towers.map((tower) => (
+            <div
+              key={tower.id}
+              onMouseEnter={() => setHoveredTower(tower.id)}
+              onMouseLeave={() => setHoveredTower(null)}
+              onClick={() => navigate(`/tower/${tower.id}`)}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-2xl bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <div className="relative h-64 overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tower.gradient} opacity-90`}></div>
+                  <img
+                    src={tower.image}
+                    alt={tower.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                    <span className="text-sm font-semibold text-slate-800">Premium</span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-slate-900 transition-colors">
+                    {tower.name}
+                  </h3>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                    {tower.description}
+                  </p>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Building className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-600">{tower.floors} Floors</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-600">{tower.totalUnits} Units</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-slate-800">{tower.priceRange}</span>
+                    <div
+                      className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center"
+                    >
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Additional Info Section removed */}
+      </main>
     </div>
   );
 };
