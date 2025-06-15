@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Car, Star, Home } from "lucide-react";
 import NotFound from "./NotFound";
 
 const towers = {
@@ -9,8 +9,12 @@ const towers = {
   'tower-c': { name: 'Tower C - Garden Terraces', gradient: 'from-green-600 to-teal-600' }
 };
 
-
-
+const apartments = [
+  {
+    id: 'apt-1',
+    unitType: 'Studio Deluxe'
+  }
+];
 
 const FloorView = () => {
   const { towerId, floorNumber } = useParams();
@@ -42,7 +46,34 @@ const FloorView = () => {
           </div>
         </div>
       </header>
-
+      <main className="max-w-7xl mx-auto px-6 py-8 relative z-15">
+        <div className="mt-12 bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-white/30">
+          <h3 className="text-xl font-bold text-slate-800 mb-6">Floor {floorNumber} Features</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex items-center gap-3">
+              <Star className="w-6 h-6 text-yellow-500" />
+              <div>
+                <h4 className="font-semibold text-slate-700">Premium Finishes</h4>
+                <p className="text-sm text-slate-600">High-end materials throughout</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Car className="w-6 h-6 text-blue-500" />
+              <div>
+                <h4 className="font-semibold text-slate-700">Parking Included</h4>
+                <p className="text-sm text-slate-600">Dedicated parking spaces</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Home className="w-6 h-6 text-green-500" />
+              <div>
+                <h4 className="font-semibold text-slate-700">Smart Home Ready</h4>
+                <p className="text-sm text-slate-600">Pre-wired for automation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
