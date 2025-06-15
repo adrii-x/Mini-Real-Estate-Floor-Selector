@@ -9,7 +9,6 @@ const towers = {
   'tower-c': { name: 'Tower C - Garden Terraces', gradient: 'from-green-600 to-teal-600' }
 };
 
-// Example: expanded apartmentDetails object based on your apartments array
 const apartmentDetails = {
   'apt-1': {
     id: 'apt-1',
@@ -19,8 +18,6 @@ const apartmentDetails = {
     rooms: 1,
     bathrooms: 1,
     price: 350000,
-    image: 'https://plus.unsplash.com/premium_photo-1674730952112-965c8e4decf4?q=80&w=2815&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    floorPlan: 'https://images.unsplash.com/photo-1461559289991-233af43c1ea6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     features: ['City View', 'Modern Kitchen', 'Smart Home', 'Hardwood Floors', 'Stainless Steel Appliances'],
     availability: 'Available',
     description: 'This stunning studio apartment offers modern city living with premium finishes and smart home technology. Perfect for young professionals seeking luxury and convenience.',
@@ -38,8 +35,6 @@ const apartmentDetails = {
     rooms: 2,
     bathrooms: 1,
     price: 475000,
-    image: 'https://plus.unsplash.com/premium_photo-1661962302410-36d3325cf9ce?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    floorPlan: 'https://images.unsplash.com/photo-1461559289991-233af43c1ea6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     features: ['Balcony', 'Ocean View', 'Walk-in Closet', 'Modern Kitchen', 'Smart Home'],
     availability: 'Available',
     description: 'A spacious one-bedroom apartment with a private balcony and ocean views. Enjoy a walk-in closet and a modern kitchen in this premium unit.',
@@ -57,8 +52,6 @@ const apartmentDetails = {
     rooms: 3,
     bathrooms: 2,
     price: 625000,
-    image: 'https://images.unsplash.com/photo-1686056040370-b5e5c06c4273?q=80&w=2837&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    floorPlan: 'https://images.unsplash.com/photo-1461559289991-233af43c1ea6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     features: ['Corner Unit', 'Dual Balcony', 'Master Suite', 'City View', 'Smart Home'],
     availability: 'Reserved',
     description: 'A luxury two-bedroom corner unit with dual balconies and a spacious master suite. Reserved for those seeking the best in city living.',
@@ -76,8 +69,6 @@ const apartmentDetails = {
     rooms: 3,
     bathrooms: 2,
     price: 785000,
-    image: 'https://images.unsplash.com/photo-1568115286680-d203e08a8be6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    floorPlan: 'https://images.unsplash.com/photo-1461559289991-233af43c1ea6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     features: ['Panoramic View', 'Private Terrace', 'Premium Finishes', 'Smart Home', 'Walk-in Closet'],
     availability: 'Available',
     description: 'Experience penthouse living with panoramic views, a private terrace, and premium finishes throughout. The ultimate in luxury and comfort.',
@@ -128,56 +119,16 @@ const ApartmentDetail = () => {
           </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 flex flex-col items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-              <img
-                src={apartment.image}
-                alt={apartment.unitType}
-                className="w-full h-96 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-6 left-6 text-white">
-                <h2 className="text-3xl font-bold mb-2">{formatPrice(apartment.price)}</h2>
-                <p className="text-lg opacity-90">{apartment.area} {apartment.areaUnit}</p>
-              </div>
-              <div className={`absolute top-6 right-6 px-4 py-2 rounded-full text-sm font-semibold ${
-                apartment.availability === 'Available' 
-                  ? 'bg-green-500 text-white' 
-                  : 'bg-orange-500 text-white'
-              }`}>
-                {apartment.availability}
-              </div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50"
-            >
-              <h3 className="text-xl font-bold text-slate-800 mb-4">Floor Plan</h3>
-              <div className="relative overflow-hidden rounded-xl">
-                <img
-                  src={apartment.floorPlan}
-                  alt="Floor Plan"
-                  className="w-full h-64 object-cover"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
+          
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 ">
               <h3 className="text-xl font-bold text-slate-800 mb-6">Unit Details</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-center gap-3">
