@@ -1,7 +1,6 @@
+# Mini Real Estate Floor Selector
 
-# Premium Residences - Luxury Real Estate Platform
-
-A modern, responsive web application for showcasing luxury residential towers and apartment listings. Built with cutting-edge web technologies to provide an exceptional user experience for potential residents and real estate professionals.
+This is a React application I built for exploring apartment towers and their floor plans. The idea was to create something that lets users browse through different residential towers, check out floors, and see available apartments.
 
 ## Features
 
@@ -41,19 +40,13 @@ src/
 └── main.tsx           # Application entry point
 ```
 
-## Getting Started
+## How to run it
 
-### Prerequisites
-
-- Node.js (version 16 or higher)
-- npm or yarn package manager
-
-### Installation
+You'll need Node.js installed (I used version 18, but 16+ should work fine).
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd premium-residences
+git clone https://github.com/adrii-x/Mini-Real-Estate-Floor-Selector.git
 ```
 
 2. Install dependencies:
@@ -66,57 +59,16 @@ npm install
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:8080`
-
-## Available Scripts
-
-- `npm run dev` - Start the development server
-- `npm run build` - Build the application for production
-- `npm run preview` - Preview the production build locally
-- `npm run lint` - Run ESLint for code quality checks
-
-## Building for Production
-
-To create a production build:
-
-```bash
-npm run build
-```
-
-The built files will be generated in the `dist/` directory and can be deployed to any static hosting service.
+Then open http://localhost:5173 in your browser.
 
 ## Deployment
 
-This application can be deployed to various platforms:
+The app is deployed on Vercel. I chose Vercel because it integrates really well with React projects and handles the build process automatically when you push to GitHub.
 
-- **Vercel**: Connect your repository for automatic deployments
-- **Netlify**: Drag and drop the `dist` folder or connect via Git
-- **AWS S3**: Upload the build files to an S3 bucket with static hosting
-- **GitHub Pages**: Use GitHub Actions for automated deployment
+## Browser compatibility
 
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For questions or support, please contact the development team.
+Tested on Chrome, Firefox, Safari, and Edge. The animations might be slightly different on older browsers, but the core functionality works everywhere.
 
 ---
 
-**Premium Residences** - Where luxury meets innovation.
+Built this as a coding challenge - had fun working on the hover animations and making the navigation feel smooth!
