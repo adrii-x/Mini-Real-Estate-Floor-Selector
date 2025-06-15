@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft} from "lucide-react";
 import NotFound from "./NotFound";
 
 const towers = {
@@ -38,10 +38,12 @@ const TowerView = () => {
     return <NotFound />;
   }
 
-  const floor = {
-    number: tower.floors,
-    view: 'Premium View'
-  };
+  const floors = Array.from({ length: tower.floors }, (_, i) => ({
+    number: tower.floors - i,
+    units: 12,
+    available: 3,
+    view: i < 5 ? 'Premium View' : i < 10 ? 'City View' : 'Garden View'
+  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -66,32 +68,42 @@ const TowerView = () => {
       <main className="max-w-6xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-slate-800 mb-2">Select a Floor</h2>
-          <p className="text-slate-600">Choose from 1 featured floor of luxury living</p>
+          <p className="text-slate-600">Choose from {tower.floors} floors of luxury living</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          <div
-            onMouseEnter={() => setHoveredFloor(floor.number)}
-            onMouseLeave={() => setHoveredFloor(null)}
-            onClick={() => navigate(`/tower/${towerId}/floor/${floor.number}`)}
-            className="group cursor-pointer"
-          >
-            <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-slate-800 mb-1">
-                    Floor {floor.number}
-                  </h3>
-                  <p className="text-sm text-slate-600">{floor.view}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {floors.map((floor) => (
+            <div
+              key={floor.number}
+              onMouseEnter={() => setHoveredFloor(floor.number)}
+              onMouseLeave={() => setHoveredFloor(null)}
+              onClick={() => navigate(`/tower/${towerId}/floor/${floor.number}`)}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-xl bg-white/60 backdrop-blur-sm border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                {/* Floor Number Badge */}
+                <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${tower.gradient} text-white flex items-center justify-center rounded-bl-xl`}>
+                  <span className="text-lg font-bold">{floor.number}</span>
                 </div>
-                <button
-                  className={`w-full py-2 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
-                >
-                  View Apartments
-                </button>
+
+                <div className="p-6">
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-slate-800 mb-1">
+                      Floor {floor.number}
+                    </h3>
+                    <p className="text-sm text-slate-600">{floor.view}</p>
+                  </div>
+
+                 
+                  <button
+                    className={`w-full py-2 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
+                  >
+                    View Apartments
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </main>
     </div>
