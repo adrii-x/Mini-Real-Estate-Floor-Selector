@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Building, MapPin } from "lucide-react";
+import { Building, MapPin, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const towers = [
@@ -10,6 +10,7 @@ const towers = [
     floors: 15,
     totalUnits: 180,
     priceRange: '$350K - $750K',
+    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop',
     gradient: 'from-blue-600 to-purple-600'
   },
   {
@@ -19,6 +20,7 @@ const towers = [
     floors: 12,
     totalUnits: 144,
     priceRange: '$425K - $850K',
+    image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=600&fit=crop',
     gradient: 'from-teal-600 to-blue-600'
   },
   {
@@ -28,6 +30,7 @@ const towers = [
     floors: 10,
     totalUnits: 120,
     priceRange: '$400K - $700K',
+    image: 'https://images.unsplash.com/photo-1496307653780-42ee777d4833?w=800&h=600&fit=crop',
     gradient: 'from-green-600 to-teal-600'
   }
 ];
@@ -51,11 +54,31 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {towers.map((tower) => (
-            <div>
+            <div
+              key={tower.id}
+              onMouseEnter={() => setHoveredTower(tower.id)}
+              onMouseLeave={() => setHoveredTower(null)}
+              onClick={() => navigate(`/tower/${tower.id}`)}
+              className="group cursor-pointer"
+            >
               <div className="relative overflow-hidden rounded-2xl bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <div className="relative h-64 overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tower.gradient} opacity-90`}></div>
+                  <img
+                    src={tower.image}
+                    alt={tower.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                    <span className="text-sm font-semibold text-slate-800">Premium</span>
+                  </div>
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-slate-900 transition-colors">
                     {tower.name}
@@ -88,6 +111,7 @@ const Index = () => {
             </div>
           ))}
         </div>
+        {/* Additional Info Section removed */}
       </main>
     </div>
   );
