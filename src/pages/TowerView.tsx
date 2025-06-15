@@ -32,18 +32,17 @@ const TowerView = () => {
   const { towerId } = useParams();
   const navigate = useNavigate();
   const [hoveredFloor, setHoveredFloor] = useState<number | null>(null);
-
+  
   const tower = towers[towerId as keyof typeof towers];
-
+  
   if (!tower) {
     return <NotFound />;
   }
 
-  // Generate floors with fixed values for units and available
   const floors = Array.from({ length: tower.floors }, (_, i) => ({
     number: tower.floors - i,
-    units: 12,
-    available: 3,
+    units: Math.floor(Math.random() * 4) + 8,
+    available: Math.floor(Math.random() * 5) + 2,
     view: i < 5 ? 'Premium View' : i < 10 ? 'City View' : 'Garden View'
   }));
 
@@ -86,6 +85,7 @@ const TowerView = () => {
         </div>
       </header>
 
+      {/* Main Content */}
       <main className="max-w-6xl mx-auto px-6 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -157,10 +157,14 @@ const TowerView = () => {
                     View Apartments
                   </motion.button>
                 </div>
+
+
               </div>
             </motion.div>
           ))}
         </motion.div>
+
+
       </main>
     </div>
   );
