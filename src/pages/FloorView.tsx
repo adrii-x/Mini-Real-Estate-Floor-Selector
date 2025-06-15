@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Car, Star, Home } from "lucide-react";
+import { ArrowLeft, Home, Maximize, Bath, Car, Star } from "lucide-react";
 import NotFound from "./NotFound";
 
 const towers = {
@@ -12,7 +12,39 @@ const towers = {
 const apartments = [
   {
     id: 'apt-1',
-    unitType: 'Studio Deluxe'
+    unitType: 'Studio Deluxe',
+    area: 650,
+    areaUnit: 'sq ft',
+    rooms: 1,
+    bathrooms: 1,
+    features: ['City View', 'Modern Kitchen', 'Smart Home']
+  },
+  {
+    id: 'apt-2',
+    unitType: '1BR Premium',
+    area: 850,
+    areaUnit: 'sq ft',
+    rooms: 2,
+    bathrooms: 1,
+    features: ['Balcony', 'Ocean View', 'Walk-in Closet']
+  },
+  {
+    id: 'apt-3',
+    unitType: '2BR Luxury',
+    area: 1200,
+    areaUnit: 'sq ft',
+    rooms: 3,
+    bathrooms: 2,
+    features: ['Corner Unit', 'Dual Balcony', 'Master Suite']
+  },
+  {
+    id: 'apt-4',
+    unitType: '2BR Penthouse',
+    area: 1450,
+    areaUnit: 'sq ft',
+    rooms: 3,
+    bathrooms: 2,
+    features: ['Panoramic View', 'Private Terrace', 'Premium Finishes']
   }
 ];
 
@@ -66,6 +98,38 @@ const FloorView = () => {
                     <h3 className="text-xl font-bold text-slate-800 mb-1">
                       {apartment.unitType}
                     </h3>
+                    <p className="text-sm text-slate-600">{apartment.area} {apartment.areaUnit}</p>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <div className="flex items-center gap-1">
+                      <Home className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-600">{apartment.rooms}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Bath className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-600">{apartment.bathrooms}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Maximize className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-600">{apartment.area}</span>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1">
+                      {apartment.features.slice(0, 2).map((feature, index) => (
+                        <span
+                          key={index}
+                          className="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                      {apartment.features.length > 2 && (
+                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
+                          +{apartment.features.length - 2}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <button
                     className={`w-full py-3 rounded-lg bg-gradient-to-r ${tower.gradient} text-white font-medium text-sm transition-all duration-200 hover:shadow-lg`}
